@@ -32,7 +32,7 @@ export const CreativityControl: React.FC<CreativityControlProps> = ({ value, onC
 
   return (
     <div className="space-y-3">
-      <label className="text-sm font-medium text-slate-300">Geometric Precision</label>
+      <label className="text-sm font-medium text-slate-600">Geometric Precision</label>
       <div className="grid grid-cols-1 gap-2">
         {levels.map((level) => (
           <button
@@ -40,19 +40,19 @@ export const CreativityControl: React.FC<CreativityControlProps> = ({ value, onC
             onClick={() => onChange(level.id)}
             disabled={disabled}
             className={`
-              relative flex items-center gap-3 p-3 rounded-lg border transition-all text-left
+              relative flex items-center gap-3 p-3 rounded-xl border transition-all text-left
               ${value === level.id 
-                ? 'bg-indigo-600/20 border-indigo-500 ring-1 ring-indigo-500/50' 
-                : 'bg-slate-800 border-slate-700 hover:border-slate-600 hover:bg-slate-750'
+                ? 'bg-sky-50 border-sky-300 ring-1 ring-sky-200' 
+                : 'bg-white border-slate-200 hover:border-sky-200 hover:bg-sky-50/50'
               }
               ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
             `}
           >
-            <div className={`p-2 rounded-md ${value === level.id ? 'bg-indigo-600 text-white' : 'bg-slate-700 text-slate-400'}`}>
+            <div className={`p-2 rounded-lg ${value === level.id ? 'bg-sky-400 text-white shadow-sm' : 'bg-slate-100 text-slate-400'}`}>
               {level.icon}
             </div>
             <div>
-              <div className={`text-sm font-semibold ${value === level.id ? 'text-white' : 'text-slate-200'}`}>
+              <div className={`text-sm font-semibold ${value === level.id ? 'text-sky-900' : 'text-slate-600'}`}>
                 {level.label}
               </div>
               <div className="text-[10px] text-slate-400 leading-tight">

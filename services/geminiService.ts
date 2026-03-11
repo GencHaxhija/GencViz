@@ -4,7 +4,8 @@ import { MODEL_NAME } from "../constants";
 export const editImage = async (
   base64Image: string,
   editPrompt: string,
-  apiKey: string
+  apiKey: string,
+  referenceImageBase64?: string
 ): Promise<string> => {
   if (!apiKey) {
     throw new Error("API Key is missing.");
@@ -13,26 +14,41 @@ export const editImage = async (
   const ai = new GoogleGenAI({ apiKey });
   const cleanBase64 = base64Image.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, "");
 
+  const parts: any[] = [
+    {
+      inlineData: {
+        mimeType: "image/png",
+        data: cleanBase64,
+      },
+    },
+    { text: editPrompt },
+  ];
+
+  if (referenceImageBase64) {
+    const cleanRef = referenceImageBase64.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, "");
+    // Add reference image as the first part context
+    parts.unshift({
+      inlineData: {
+        mimeType: "image/png",
+        data: cleanRef,
+      },
+    });
+    // Append instruction to use the reference
+    parts.push({ text: "IMPORTANT: Use the first image provided as a MATERIAL REFERENCE (texture, color, style) for the edited area." });
+  }
+
   try {
     const response = await ai.models.generateContent({
       model: MODEL_NAME,
       contents: {
-        parts: [
-          {
-            inlineData: {
-              mimeType: "image/png",
-              data: cleanBase64,
-            },
-          },
-          { text: editPrompt },
-        ],
+        parts: parts,
       },
     });
 
-    const parts = response.candidates?.[0]?.content?.parts;
-    if (!parts) throw new Error("No content generated.");
+    const responseParts = response.candidates?.[0]?.content?.parts;
+    if (!responseParts) throw new Error("No content generated.");
 
-    for (const part of parts) {
+    for (const part of responseParts) {
       if (part.inlineData && part.inlineData.data) {
         return `data:image/png;base64,${part.inlineData.data}`;
       }
@@ -49,7 +65,8 @@ export const generateRendering = async (
   fullSystemPrompt: string,
   apiKey: string,
   count: number = 2,
-  baseSeed?: number
+  baseSeed?: number,
+  referenceImageBase64?: string
 ): Promise<string[]> => {
   if (!apiKey) {
     throw new Error("API Key is missing. Please check your environment variables.");
@@ -61,33 +78,46 @@ export const generateRendering = async (
   // If no seed provided, create a random one for this batch
   const batchSeed = baseSeed ?? Math.floor(Math.random() * 1000000);
 
-  const generateSingleImage = async (index: number): Promise<string> => {
+  const generateSingleImage = async (index: number, retryCount = 0): Promise<string> => {
     try {
       // Use the batch seed plus index to get "related" but slightly different variations
       const currentSeed = batchSeed + index;
 
+      const parts: any[] = [
+        {
+          inlineData: {
+            mimeType: "image/png",
+            data: cleanBase64,
+          },
+        },
+        { text: fullSystemPrompt },
+      ];
+
+      if (referenceImageBase64) {
+          const cleanRef = referenceImageBase64.replace(/^data:image\/(png|jpeg|jpg|webp);base64,/, "");
+          parts.unshift({
+              inlineData: {
+                  mimeType: "image/png",
+                  data: cleanRef
+              }
+          });
+          parts.push({ text: "IMPORTANT: Use the first image provided as a MATERIAL REFERENCE (texture, color, style) for the rendering." });
+      }
+
       const response = await ai.models.generateContent({
         model: MODEL_NAME,
         contents: {
-          parts: [
-            {
-              inlineData: {
-                mimeType: "image/png",
-                data: cleanBase64,
-              },
-            },
-            { text: fullSystemPrompt },
-          ],
+          parts: parts,
         },
         config: {
           seed: currentSeed,
         },
       });
 
-      const parts = response.candidates?.[0]?.content?.parts;
-      if (!parts) throw new Error("No content generated.");
+      const responseParts = response.candidates?.[0]?.content?.parts;
+      if (!responseParts) throw new Error("No content generated.");
 
-      for (const part of parts) {
+      for (const part of responseParts) {
         if (part.inlineData && part.inlineData.data) {
           return `data:image/png;base64,${part.inlineData.data}`;
         }
@@ -95,8 +125,17 @@ export const generateRendering = async (
       throw new Error("No image data found in response.");
     } catch (error: any) {
       const errorMsg = error.message || JSON.stringify(error);
-      if (errorMsg.includes("429") || errorMsg.includes("RESOURCE_EXHAUSTED")) {
-         throw new Error("Quota exceeded (429).");
+      const isQuotaError = errorMsg.includes("429") || errorMsg.includes("RESOURCE_EXHAUSTED") || errorMsg.includes("Quota exceeded");
+      
+      if (isQuotaError && retryCount < 3) {
+        const waitTime = Math.pow(2, retryCount) * 5000; // 5s, 10s, 20s
+        console.warn(`Quota exceeded. Retrying in ${waitTime/1000}s... (Attempt ${retryCount + 1})`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+        return generateSingleImage(index, retryCount + 1);
+      }
+
+      if (isQuotaError) {
+         throw new Error("Das API-Limit wurde überschritten (429). Bitte warten Sie eine Minute oder reduzieren Sie die Anzahl der Varianten.");
       }
       throw error;
     }
@@ -110,9 +149,9 @@ export const generateRendering = async (
         const result = await generateSingleImage(i);
         results.push(result);
         
-        // Short delay to mitigate 429 while keeping batch feel
+        // Increased delay to mitigate 429 while keeping batch feel
         if (i < count - 1) {
-          await new Promise(resolve => setTimeout(resolve, 1500));
+          await new Promise(resolve => setTimeout(resolve, 3000));
         }
       } catch (innerError: any) {
         console.warn(`Variation ${i + 1} generation failed:`, innerError);
@@ -124,6 +163,6 @@ export const generateRendering = async (
   } catch (error: any) {
     console.error("Gemini API Error:", error);
     if (results.length > 0) return results;
-    throw new Error(error.message || "Failed to generate renderings.");
+    throw error;
   }
 };

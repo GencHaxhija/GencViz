@@ -31,6 +31,8 @@ export type CreativityLevel = 'strict' | 'balanced' | 'creative';
 
 export type Season = 'winter' | 'summer' | 'autumn' | 'spring';
 
+export type RenderingStyle = 'photorealistic' | 'sketch' | 'abstract' | 'watercolor' | 'minimalist' | 'blueprint';
+
 export interface BackgroundSuggestion {
   id: string;
   label: string;

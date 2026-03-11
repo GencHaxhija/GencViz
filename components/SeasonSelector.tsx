@@ -16,17 +16,17 @@ export const SeasonSelector: React.FC<SeasonSelectorProps> = ({
   onSeasonChange,
   onBackgroundChange
 }) => {
-  const seasons: { id: Season, icon: any, color: string }[] = [
-    { id: 'spring', icon: Flower2, color: 'text-emerald-400' },
-    { id: 'summer', icon: Sun, color: 'text-amber-400' },
-    { id: 'autumn', icon: Leaf, color: 'text-orange-400' },
-    { id: 'winter', icon: CloudSnow, color: 'text-blue-400' }
+  const seasons: { id: Season, icon: any, color: string, activeColor: string }[] = [
+    { id: 'spring', icon: Flower2, color: 'text-emerald-400', activeColor: 'bg-emerald-100 text-emerald-600 border-emerald-300' },
+    { id: 'summer', icon: Sun, color: 'text-amber-400', activeColor: 'bg-amber-100 text-amber-600 border-amber-300' },
+    { id: 'autumn', icon: Leaf, color: 'text-orange-400', activeColor: 'bg-orange-100 text-orange-600 border-orange-300' },
+    { id: 'winter', icon: CloudSnow, color: 'text-sky-400', activeColor: 'bg-sky-100 text-sky-600 border-sky-300' }
   ];
 
   return (
     <div className="space-y-4">
       <div className="flex flex-col gap-2">
-        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Jahreszeit wählen</label>
+        <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Jahreszeit wählen</label>
         <div className="grid grid-cols-4 gap-2">
           {seasons.map((season) => {
             const Icon = season.icon;
@@ -37,11 +37,11 @@ export const SeasonSelector: React.FC<SeasonSelectorProps> = ({
                 onClick={() => onSeasonChange(season.id)}
                 className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-all ${
                   isActive 
-                    ? 'bg-slate-800 border-indigo-500 shadow-lg shadow-indigo-500/10' 
-                    : 'bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-400'
+                    ? `${season.activeColor} shadow-sm` 
+                    : 'bg-white border-slate-200 hover:border-sky-200 hover:bg-sky-50/50 text-slate-400'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${isActive ? season.color : ''}`} />
+                <Icon className={`w-5 h-5 ${isActive ? '' : season.color}`} />
                 <span className="text-[10px] font-bold uppercase">{SEASONAL_DATA[season.id].label}</span>
               </button>
             );
@@ -51,7 +51,7 @@ export const SeasonSelector: React.FC<SeasonSelectorProps> = ({
 
       {selectedSeason && (
         <div className="flex flex-col gap-2 animate-in fade-in slide-in-from-top-2 duration-300">
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Hintergrund-Vorschlag</label>
+          <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Hintergrund-Vorschlag</label>
           <div className="grid grid-cols-1 gap-2">
             {SEASONAL_DATA[selectedSeason].suggestions.map((suggestion) => {
               const isActive = selectedBackground?.id === suggestion.id;
@@ -61,12 +61,12 @@ export const SeasonSelector: React.FC<SeasonSelectorProps> = ({
                   onClick={() => onBackgroundChange(suggestion)}
                   className={`flex items-center justify-between gap-3 p-3 rounded-xl border text-left transition-all ${
                     isActive 
-                      ? 'bg-indigo-600/10 border-indigo-500 text-indigo-100' 
-                      : 'bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-400'
+                      ? 'bg-sky-50 border-sky-300 text-sky-800 shadow-sm' 
+                      : 'bg-white border-slate-200 hover:border-sky-200 hover:bg-sky-50/50 text-slate-500'
                   }`}
                 >
                   <span className="text-xs font-medium">{suggestion.label}</span>
-                  {isActive && <Check className="w-4 h-4 text-indigo-400" />}
+                  {isActive && <Check className="w-4 h-4 text-sky-500" />}
                 </button>
               );
             })}
