@@ -4,41 +4,37 @@ export const SEASONAL_DATA: Record<Season, { label: string, suggestions: Backgro
   winter: {
     label: 'Winter',
     suggestions: [
-      { id: 'w1', label: 'Verschneite Berge', prompt: 'pristine snow-capped alpine mountains, deep blue winter sky, brilliant low-angle sunlight, long crisp shadows on white snow, ultra-sharp frozen landscape' },
-      { id: 'w2', label: 'Zugefrorener See', prompt: 'frozen lake with polished ice surface, frost-covered birch trees, cold brilliant afternoon sun, crystal clear winter atmosphere, sharp ice textures' },
-      { id: 'w3', label: 'Winterliche Stadt', prompt: 'modern city skyline in winter, fresh snow on rooftops, cold clear blue sky, strong low winter sun, precise architectural silhouettes, crisp urban atmosphere' },
-      { id: 'w4', label: 'Nordlichter', prompt: 'vivid green and purple aurora borealis across dark sky, snow-covered silent landscape, starry night, cold blue ambient light, wide panoramic vista' },
-      { id: 'w5', label: 'Eisiger Wald', prompt: 'dense snow-laden pine forest, deep blue-white shadows, single beam of low winter sun cutting through trees, frozen bark details, pristine untouched snow' }
+      { id: 'w1', label: 'Waldrand / Bäume (Winter)', prompt: 'large bare winter trees in foreground, frost covered thick branches framing the view, crisp winter morning sunlight, sharp bark textures, pristine snow on ground' },
+      { id: 'w2', label: 'Vorgarten (Winter)', prompt: 'structured winter garden in foreground, low snow-covered shrubs, sharp geometric frost details, low-angle bright winter sun, grounded perspective' },
+      { id: 'w3', label: 'Dorf / Vorstadt (Winter)', prompt: 'quiet traditional village street in background, pitched roofs covered in fresh snow, warm low winter sunshine, cozy atmosphere, sharp frosty details' },
+      { id: 'w4', label: 'Urbane Straße (Winter)', prompt: 'clean modern urban street in foreground, bare street trees, sharp architectural shadows from cold low sun, clear winter blue sky, elegant metropolitan setting' }
     ]
   },
   summer: {
     label: 'Sommer',
     suggestions: [
-      { id: 's1', label: 'Seepromenade', prompt: 'mediterranean lake promenade in full summer, turquoise crystal clear water, bright overhead sun, sharp water reflections, vivid saturated colors, warm stone textures' },
-      { id: 's2', label: 'Grüne Hügel', prompt: 'sweeping green rolling hills under vivid blue sky, brilliant direct sunlight, defined cloud formations, sharp grass textures, deep atmospheric perspective' },
-      { id: 's3', label: 'Sommerlicher Park', prompt: 'mature deciduous park trees in full leaf, warm golden hour side-lighting, defined tree shadows on manicured lawn, rich green and gold tones, sharp leaf details' },
-      { id: 's4', label: 'Lavendelfelder', prompt: 'endless rows of deep purple lavender in full bloom, warm golden afternoon light, sharp foreground detail fading to soft horizon, rich violet and gold palette' },
-      { id: 's5', label: 'Städtischer Kontext', prompt: 'sleek modern metropolitan skyline, glass and steel towers, sharp geometric reflections, strong directional sunlight, crisp blue sky, defined architectural shadows' }
+      { id: 's1', label: 'Waldrand / Bäume (Sommer)', prompt: 'lush mature deciduous trees in foreground, heavy green leaf canopy framing the view, warm golden hour dappled lighting, sharp leaf details, rich summer tones' },
+      { id: 's2', label: 'Vorgarten (Sommer)', prompt: 'vibrant manicured summer garden in foreground, blooming low shrubs and vivid flowers, bright midday overhead sun, grounded perspective, sharp botanical details' },
+      { id: 's3', label: 'Dorf / Vorstadt (Sommer)', prompt: 'idyllic European village street in background, terracotta roofs, warm inviting afternoon sunlight, mature hedgerows, clear blue summer sky' },
+      { id: 's4', label: 'Urbane Straße (Sommer)', prompt: 'clean modern asphalt street in foreground, lush green street trees casting sharp shadows, brilliant intense summer sunlight, elegant urban metropolitan setting' }
     ]
   },
   autumn: {
     label: 'Herbst',
     suggestions: [
-      { id: 'a1', label: 'Bunter Wald', prompt: 'dense deciduous forest in peak autumn color, vivid orange red and gold canopy, crisp morning light, defined individual leaf details, warm earth tones, sharp branch silhouettes' },
-      { id: 'a2', label: 'Nebeliger Weinberg', prompt: 'terraced autumn vineyard with golden vines, thin morning mist in valley below, warm piercing sunrise breaking through, sharp vine row geometry, rich amber tones' },
-      { id: 'a3', label: 'Erntefelder', prompt: 'golden harvested wheat fields stretching to horizon, dramatic low-angle autumn sun, long warm shadows, sharp straw textures, rich amber and ochre color palette' },
-      { id: 'a4', label: 'Dörfliche Idylle', prompt: 'traditional European village with pitched roofs, colorful autumn trees lining streets, warm afternoon side-light, sharp cobblestone detail, cozy inviting atmosphere' },
-      { id: 'a5', label: 'Herbstlicher See', prompt: 'calm mountain lake with mirror-perfect reflection of autumn foliage, vivid red and gold treeline, crystal clear still water, bright crisp afternoon light, sharp shoreline detail' }
+      { id: 'a1', label: 'Waldrand / Bäume (Herbst)', prompt: 'large mature trees in peak autumn color, vivid red and gold foliage framing the view, crisp morning sunlight, falling leaves, warm earth tones' },
+      { id: 'a2', label: 'Vorgarten (Herbst)', prompt: 'landscaped autumn garden in foreground, low ornamental grasses, vivid orange and yellow foliage, dramatic golden hour side-lighting, grounded perspective' },
+      { id: 'a3', label: 'Dorf / Vorstadt (Herbst)', prompt: 'traditional village street background, warm autumn colors, long crisp afternoon shadows, quaint neighborhood atmosphere, clear autumn sky' },
+      { id: 'a4', label: 'Urbane Straße (Herbst)', prompt: 'clean modern urban street in foreground, street trees with golden autumn leaves, dramatic low-angle sunlight, long sharp shadows, elegant urban setting' }
     ]
   },
   spring: {
     label: 'Frühling',
     suggestions: [
-      { id: 'p1', label: 'Kirschblüten', prompt: 'full canopy of pale pink cherry blossoms in peak bloom, soft petals falling, bright fresh morning light, sharp branch detail against clear blue sky, delicate natural beauty' },
-      { id: 'p2', label: 'Frisches Bergpanorama', prompt: 'alpine spring panorama with melting snow peaks, vivid green high meadows, wildflowers in foreground, brilliant clear mountain sunlight, sharp distant ridgelines' },
-      { id: 'p3', label: 'Frühlingsgarten', prompt: 'professionally landscaped spring garden, fresh bright green hedges, blooming tulips and daffodils, crisp morning sunlight, sharp botanical textures, manicured lawn edges' },
-      { id: 'p4', label: 'Wildblumenwiese', prompt: 'dense colorful wildflower meadow in full spring bloom, poppies cornflowers daisies, bright warm sunlight, sharp macro-level petal details, vivid natural color palette' },
-      { id: 'p5', label: 'Erwachender Wald', prompt: 'deciduous forest with fresh bright green leaf canopy, warm dappled sunlight filtering through, defined trunk silhouettes, fern-covered forest floor, rich green and brown tones' }
+      { id: 'p1', label: 'Waldrand / Bäume (Frühling)', prompt: 'large mature trees with fresh bright green spring foliage framing the view, blooming branches, bright clear morning sunlight, vivid lively atmosphere' },
+      { id: 'p2', label: 'Vorgarten (Frühling)', prompt: 'blooming spring garden in foreground, vibrant tulips and daffodils, fresh manicured lawn, cheerful bright sunlight, sharp botanical textures, grounded perspective' },
+      { id: 'p3', label: 'Dorf / Vorstadt (Frühling)', prompt: 'traditional picturesque village street background, blooming fruit trees in neighbors yards, fresh crisp spring sunlight, inviting neighborhood setting' },
+      { id: 'p4', label: 'Urbane Straße (Frühling)', prompt: 'clean modern urban street in foreground, blossoming street trees framing the view, bright cheerful spring sunlight, sharp shadows, elegant metropolitan setting' }
     ]
   }
 };
