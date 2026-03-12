@@ -18,7 +18,7 @@ export const SEASONAL_DATA: Record<Season, { label: string, suggestions: Backgro
       { id: 's2', label: 'Grüne Hügel', prompt: 'lush green rolling hills, vivid blue summer sky, brilliant sunlight, sharp vibrant nature' },
       { id: 's3', label: 'Sommerlicher Park', prompt: 'lush summer park vegetation, golden hour lighting, warm sunbeams, highly detailed leaves' },
       { id: 's4', label: 'Lavendelfelder', prompt: 'vibrant purple lavender fields, bright warm summer sun, beautiful depth of field' },
-      { id: 's5', label: 'Städtischer Kontext', prompt: 'modern urban landscape, clean contemporary architecture background, bright clear summer day' }
+      { id: 's5', label: 'Städtischer Kontext', prompt: 'sleek modern metropolitan skyline, glass and steel towers, sharp reflections, dramatic perspective, crisp blue sky, strong architectural shadows, ultra-high contrast urban photography' }
     ]
   },
   autumn: {
@@ -74,7 +74,7 @@ export const getSystemPrompt = (
 
   // 4. Licht-Hack: Erzwingt harte Kontraste und Schatteneffekte, damit Winter/Herbst nicht matschig werden.
   const lightingOverride = season === 'summer' 
-    ? "bright natural daylight, sharp shadows" 
+    ? "brilliant intense sunlight, razor-sharp shadows, vivid saturated colors, crystal clear atmosphere, high contrast, NO blur, NO softness" 
     : "hyper-crisp dramatic lighting, strong directional light, cinematic high contrast, razor-sharp shadows, crystal clear definition, pristine physical materials, NO blur, NO softness";
 
   // ZUSAMMENBAU: Ein String, nur durch Kommas getrennt. Keine langen Befehle mehr!
