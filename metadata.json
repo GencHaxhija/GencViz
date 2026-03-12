@@ -1,5 +1,5 @@
 {
-  "name": "ArchViz AI Renderer",
+  "name": "GencViz AI Renderer",
   "description": "Transform architectural sketches and block models into realistic renderings for competitions using Gemini 2.5 Flash.",
   "requestFramePermissions": []
 }
